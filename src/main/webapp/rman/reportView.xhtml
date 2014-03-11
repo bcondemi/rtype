@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition template="/WEB-INF/template/main.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <ui:define name="content">
+
+            <h:form>  
+
+                <p:poll interval="3" update="reportTable" />  
+
+                <p:panel  header="Chart" toggleable="true">
+
+                    <p:lineChart id="linear" value="#{reportController.reportGraphModel}" legendPosition="e"  
+                                 title="Linear Chart" minY="0" maxY="10" style="height:300px"/> 
+
+                </p:panel>
+
+                <p:separator/>
+
+                <p:panel  header="Data" toggleable="true">
+
+                       <p:separator />
+                    
+                    <p:menubar>
+                        <p:menuitem icon="ui-icon-search" value="Find" actionListener="#{reportController.initReportList}" update="reportTable"/>
+                        <p:menuitem icon="ui-icon-search" value="Delete" actionListener="#{reportController.initReportList}" update="reportTable"/>
+                        <p:menuitem icon="ui-icon-search" value="Delete All" actionListener="#{reportController.initReportList}" update="reportTable"/>
+                        <p:menuitem icon="ui-icon-search" value="Export" actionListener="#{reportController.initReportList}" update="reportTable"/>
+
+                    </p:menubar>
+
+                    <p:separator />
+
+                    <p:dataTable id="reportTable" var="report" value="#{reportController.reportList}" 
+                                 filteredValue="#{reportController.filteredReports}" widgetVar="carsTable"
+                                 paginator="true" rows="10"  
+                                 selection="#{reportController.selectedReports}" rowKey="report.reportModelPK">  
+
+                        <p:column selectionMode="multiple" style="width:2%" />                  
+
+                        <p:column  id="dbname" headerText="DB Name">  
+                            <h:outputText value="#{report.reportModelPK.dbName}" />  
+                        </p:column>  
+
+                        <p:column headerText="Backup Object" filterBy="backupObject" >  
+                            <h:outputText value="#{report.reportModelPK.backupObject}" />  
+                        </p:column>  
+
+                        <p:column headerText="Target Device">  
+                            <h:outputText value="#{report.targetDevice}" />  
+                        </p:column>  
+
+                        <p:column headerText="Backup Size (MB)">  
+                            <h:outputText value="#{report.backupsizeMb}" />  
+                        </p:column>  
+
+                        <p:column headerText="Backup Speed (MB/s)">  
+                            <h:outputText value="#{report.backupspeedpersecMb}" />  
+                        </p:column>  
+
+                        <p:column headerText="Time Taken">  
+                            <h:outputText value="#{report.timeTaken}" />  
+                        </p:column>  
+
+                        <p:column headerText="Backup Begin">  
+                            <h:outputText value="#{report.backupBegin}" />  
+                        </p:column>  
+
+                        <p:column headerText="Backup End">  
+                            <h:outputText value="#{report.backupEnd}" />  
+                        </p:column>  
+
+                        <p:column headerText="Session">  
+                            <h:outputText value="#{report.sessionRecid}" />  
+                        </p:column>  
+                    </p:dataTable>  
+
+                </p:panel>
+            </h:form> 
+
+    </ui:define>
+</ui:composition>
+
